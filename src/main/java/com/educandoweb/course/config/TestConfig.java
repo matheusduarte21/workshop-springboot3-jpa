@@ -14,7 +14,7 @@ import com.educandoweb.course.repositories.UserRepository;
 @Profile("test")
 public class TestConfig implements CommandLineRunner {
 	
-	@Autowired // dependecia
+	@Autowired //dependecia
 	private UserRepository userRepository;
 
 	@Override
