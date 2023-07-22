@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,9 +21,9 @@ public class Payment implements Serializable {
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
 	private Instant moment;
 	
+	@JsonIgnore
 	@OneToOne // associação 1 pra 1
 	@MapsId
 	private Order order;
