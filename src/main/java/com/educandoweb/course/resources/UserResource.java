@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,5 +42,11 @@ public class UserResource {
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);
+	}
+	
+	@DeleteMapping
+	public ResponseEntity<Void> delete(@PathVariable Long id){ // para ser reconhecimento com a variavel da url usar o path
+		service.delete(id);
+		return ResponseEntity.noContent().build(); // usar o NoContent quando for retorna uma resposta vazia//codigio 204
 	}
 }
