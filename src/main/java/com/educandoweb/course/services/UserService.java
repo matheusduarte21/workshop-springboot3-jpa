@@ -4,10 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.educandoweb.course.entities.User;
 import com.educandoweb.course.repositories.UserRepository;
+import com.educandoweb.course.services.exceptions.DataBaseException;
 import com.educandoweb.course.services.exceptions.ResourceNotFoundExcepetion;
 
 @Service // pq a class é uma camada de serviço
@@ -30,7 +33,15 @@ public class UserService {
 	}
 	
 	public void delete (Long id) {
+		try {
 		repository.deleteById(id); // deletar por ID
+		} 
+		catch(EmptyResultDataAccessException e) {
+			throw new ResourceNotFoundExcepetion(id);
+		}
+		catch(DataIntegrityViolationException e) {
+			throw new DataBaseException(e.getMessage());
+		}
 	}
 	
 	public User update(Long id, User obj) {
